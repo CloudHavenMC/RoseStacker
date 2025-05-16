@@ -208,6 +208,18 @@ public class StackedBlockGui {
         if (newStackSize == this.stackedBlock.getStackSize())
             return;
 
+        int maxStackSize = this.stackedBlock.getStackSettings().getMaxStackSize();
+        if (newStackSize > maxStackSize) {
+            // Refund the items to the player and adjust the new stack size.
+            ItemUtils.dropItemsToPlayer(player, GuiUtil.getMaterialAmountAsItemStacks(this.stackType, newStackSize - maxStackSize));
+
+            // Is the player trying to add items to a stack that is already full?
+            if (maxStackSize == this.stackedBlock.getStackSize())
+                return;
+
+            newStackSize = maxStackSize;
+        }
+
         int difference = newStackSize - this.stackedBlock.getStackSize();
         if (newStackSize > this.stackedBlock.getStackSize()) {
             BlockStackEvent blockStackEvent = new BlockStackEvent(player, this.stackedBlock, difference, false);
@@ -231,7 +243,6 @@ public class StackedBlockGui {
 
         this.stackedBlock.setStackSize(newStackSize);
 
-        int maxStackSize = this.stackedBlock.getStackSettings().getMaxStackSize();
         if (newStackSize == 1) {
             stackManager.removeBlockStack(this.stackedBlock);
         } else if (newStackSize == 0) {

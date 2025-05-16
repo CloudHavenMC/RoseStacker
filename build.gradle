@@ -25,6 +25,7 @@ allprojects {
 
     repositories {
         mavenCentral()
+        mavenLocal()
 
         maven { url = 'https://repo.rosewooddev.io/repository/public/' }
         maven { url = 'https://libraries.minecraft.net' }
@@ -37,22 +38,13 @@ allprojects {
         maven { url = 'https://repo.md-5.net/content/repositories/public/' }
         maven { url = 'https://repo.codemc.org/repository/maven-public' }
         maven { url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/' }
-        maven { url = 'https://mvn.lumine.io/repository/maven-public/' }
         maven { url = 'https://maven.playpro.com' }
         maven { url = 'https://repo.bsdevelopment.org/releases' }
         maven { url = 'https://nexus.neetgames.com/repository/maven-releases/' }
         maven { url = 'https://jitpack.io' }
-
-        maven {
-            url = 'https://repo.rosewooddev.io/repository/maven-public'
-            credentials {
-                username project.mavenUser
-                password project.mavenPassword
-                authentication {
-                    basic(BasicAuthentication)
-                }
-            }
-        }
+        maven { url = 'https://maven.citizensnpcs.co/repo' }
+        maven { url = 'https://repo.magmaguy.com/releases' }
+        maven { url = 'https://raw.githubusercontent.com/Shopkeepers/Repository/main/releases/' }
     }
 
     dependencies {
@@ -112,4 +104,3 @@ publishing {
 }
 
 build.dependsOn shadowJar
-publishShadowPublicationToMavenRepository.dependsOn jar
